@@ -1,0 +1,142 @@
+[gd_scene format=3 uid="uid://begunmaot5nhh"]
+
+[ext_resource type="Script" uid="uid://ck84y4sh6rjf0" path="res://scripts/join_menu.gd" id="1_join"]
+[ext_resource type="AudioStream" uid="uid://devt0a8u51ugh" path="res://assets/sounds/ui/clicks_pops/sfx_clicks_pops_01_soft_click.ogg" id="2_click"]
+[ext_resource type="AudioStream" uid="uid://bobj0yvaqrdmx" path="res://assets/sounds/ui/hover_soft_tick/sfx_hover_soft_tick_01_tick_soft.ogg" id="3_hover"]
+[ext_resource type="FontFile" uid="uid://2qyo6se1m5rn" path="res://assets/fonts/Remingtoned Type.ttf" id="4_title"]
+[ext_resource type="FontFile" uid="uid://bmlerudscjs5e" path="res://assets/fonts/HomeVideo-Regular.ttf" id="5_body"]
+[ext_resource type="StyleBox" uid="uid://y5v63t6ijf5b" path="res://assets/styles/grey_bottom_line.tres" id="6_btn"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_field"]
+bg_color = Color(0.12, 0.12, 0.12, 1)
+border_width_bottom = 2
+border_color = Color(0.34, 0.34, 0.34, 1)
+content_margin_left = 8.0
+content_margin_top = 6.0
+content_margin_right = 8.0
+content_margin_bottom = 6.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_field_focus"]
+bg_color = Color(0.16, 0.16, 0.16, 1)
+border_width_bottom = 2
+border_color = Color(1, 0.953, 0.3, 1)
+content_margin_left = 8.0
+content_margin_top = 6.0
+content_margin_right = 8.0
+content_margin_bottom = 6.0
+
+[node name="JoinMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_join")
+
+[node name="Dim" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.025, 0.025, 0.025, 1)
+
+[node name="Panel" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 600.0
+offset_top = 280.0
+offset_right = 1320.0
+offset_bottom = 720.0
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="Title" type="Label" parent="Panel"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("4_title")
+theme_override_font_sizes/font_size = 36
+text = "JOIN GAME"
+horizontal_alignment = 1
+
+[node name="IPLabel" type="Label" parent="Panel"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.85, 0.85, 1)
+theme_override_fonts/font = ExtResource("5_body")
+theme_override_font_sizes/font_size = 18
+text = "Host IP (Radmin VPN)"
+horizontal_alignment = 1
+
+[node name="IPInput" type="LineEdit" parent="Panel"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_body")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxFlat_field")
+theme_override_styles/focus = SubResource("StyleBoxFlat_field_focus")
+theme_override_styles/read_only = SubResource("StyleBoxFlat_field")
+placeholder_text = "26.x.x.x"
+alignment = 1
+
+[node name="PortLabel" type="Label" parent="Panel"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.85, 0.85, 1)
+theme_override_fonts/font = ExtResource("5_body")
+theme_override_font_sizes/font_size = 18
+text = "Port"
+horizontal_alignment = 1
+
+[node name="PortSpin" type="SpinBox" parent="Panel"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_body")
+theme_override_font_sizes/font_size = 20
+min_value = 1024.0
+max_value = 65535.0
+value = 7777.0
+alignment = 1
+
+[node name="StatusLabel" type="Label" parent="Panel"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.75, 0.85, 1, 1)
+theme_override_fonts/font = ExtResource("5_body")
+theme_override_font_sizes/font_size = 18
+text = "Enter the host's Radmin IP"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="JoinButton" type="Button" parent="Panel"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(1, 0.953, 0.3, 1)
+theme_override_colors/font_disabled_color = Color(0.45, 0.45, 0.45, 1)
+theme_override_fonts/font = ExtResource("4_title")
+theme_override_font_sizes/font_size = 28
+theme_override_styles/normal = ExtResource("6_btn")
+theme_override_styles/hover = ExtResource("6_btn")
+theme_override_styles/pressed = ExtResource("6_btn")
+theme_override_styles/disabled = ExtResource("6_btn")
+text = "JOIN"
+
+[node name="BackButton" type="Button" parent="Panel"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(1, 0.953, 0.3, 1)
+theme_override_fonts/font = ExtResource("4_title")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = ExtResource("6_btn")
+theme_override_styles/hover = ExtResource("6_btn")
+theme_override_styles/pressed = ExtResource("6_btn")
+text = "BACK"
+
+[node name="Click" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_click")
+bus = &"UI"
+
+[node name="Hover" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_hover")
+bus = &"UI"
+
+[connection signal="mouse_entered" from="Panel/JoinButton" to="." method="_on_any_hover"]
+[connection signal="pressed" from="Panel/JoinButton" to="." method="_on_join_pressed"]
+[connection signal="mouse_entered" from="Panel/BackButton" to="." method="_on_any_hover"]
+[connection signal="pressed" from="Panel/BackButton" to="." method="_on_back_pressed"]

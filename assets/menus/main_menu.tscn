@@ -1,0 +1,233 @@
+[gd_scene format=3 uid="uid://ew6g4r1fj7p4"]
+
+[ext_resource type="Script" uid="uid://ba2ayn0erpa3f" path="res://scripts/main_menu.gd" id="1_8gy84"]
+[ext_resource type="AudioStream" uid="uid://devt0a8u51ugh" path="res://assets/sounds/ui/clicks_pops/sfx_clicks_pops_01_soft_click.ogg" id="2_ij7vn"]
+[ext_resource type="Texture2D" uid="uid://bkthvqouvf2i2" path="res://assets/textures/game_corner_logo.svg" id="2_x2l61"]
+[ext_resource type="FontFile" uid="uid://bmlerudscjs5e" path="res://assets/fonts/HomeVideo-Regular.ttf" id="3_b06lc"]
+[ext_resource type="AudioStream" uid="uid://bobj0yvaqrdmx" path="res://assets/sounds/ui/hover_soft_tick/sfx_hover_soft_tick_01_tick_soft.ogg" id="3_yjgyn"]
+[ext_resource type="FontFile" uid="uid://2qyo6se1m5rn" path="res://assets/fonts/Remingtoned Type.ttf" id="4_30wg0"]
+[ext_resource type="PackedScene" uid="uid://35liah1guelk" path="res://assets/menus/settings_menu.tscn" id="4_rqbgu"]
+[ext_resource type="FontFile" uid="uid://ifu2mj4o5rg8" path="res://assets/fonts/HomeVideo-Bold.ttf" id="4_x33bs"]
+[ext_resource type="StyleBox" uid="uid://y5v63t6ijf5b" path="res://assets/styles/grey_bottom_line.tres" id="5_30wg0"]
+[ext_resource type="PackedScene" uid="uid://sdts4syw3kvi" path="res://assets/menus/host_menu.tscn" id="5_host"]
+[ext_resource type="PackedScene" uid="uid://begunmaot5nhh" path="res://assets/menus/join_menu.tscn" id="6_join"]
+[ext_resource type="PackedScene" uid="uid://itevjcbp8jry" path="res://assets/menus/lobby_menu.tscn" id="7_lobby"]
+
+[sub_resource type="Gradient" id="Gradient_30wg0"]
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_jq8tk"]
+gradient = SubResource("Gradient_30wg0")
+width = 1920
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3xd07"]
+bg_color = Color(0.23529412, 0.23529412, 0.67058825, 0.8784314)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jq8tk"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_u6e68"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ae0ry"]
+
+[node name="MainMenu" type="Control" unique_id=1257231597]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_8gy84")
+
+[node name="Background" type="ColorRect" parent="." unique_id=117142023]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -960.0
+offset_top = -540.0
+offset_right = 960.0
+offset_bottom = 540.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.08208812, 0.075389944, 0.07204079, 1)
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=623982948]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture1D_jq8tk")
+
+[node name="Logo" type="TextureRect" parent="." unique_id=297663057]
+layout_mode = 0
+offset_left = 210.0
+offset_top = 31.0
+offset_right = 357.67688
+offset_bottom = 176.0
+texture = ExtResource("2_x2l61")
+expand_mode = 1
+
+[node name="GameTitle" type="RichTextLabel" parent="." unique_id=889600389]
+layout_mode = 0
+offset_left = 29.0
+offset_top = 167.0
+offset_right = 545.0
+offset_bottom = 387.0
+theme_override_fonts/normal_font = ExtResource("4_30wg0")
+theme_override_font_sizes/normal_font_size = 60
+text = "Game Corner:
+THE GAME"
+horizontal_alignment = 1
+
+[node name="UsernameBox" type="Panel" parent="." unique_id=1081081412]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -500.0
+offset_top = 67.0
+offset_right = -65.0
+offset_bottom = 133.0
+grow_horizontal = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_3xd07")
+
+[node name="UsernameLabel" type="Label" parent="UsernameBox" unique_id=1680853583]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 9.0
+offset_top = -11.0
+offset_right = 144.0
+offset_bottom = 12.5
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("4_x33bs")
+theme_override_font_sizes/font_size = 25
+text = "Username:"
+
+[node name="UsernameInput" type="LineEdit" parent="UsernameBox" unique_id=1195158409]
+custom_minimum_size = Vector2(280, 0)
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -280.0
+offset_top = -33.0
+offset_bottom = 33.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("3_b06lc")
+theme_override_font_sizes/font_size = 25
+theme_override_styles/normal = SubResource("StyleBoxEmpty_jq8tk")
+theme_override_styles/read_only = SubResource("StyleBoxEmpty_u6e68")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_ae0ry")
+placeholder_text = "player"
+max_length = 24
+
+[node name="MainButtons" type="VBoxContainer" parent="." unique_id=1982524452]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 120.0
+offset_top = -130.0
+offset_right = 416.0
+offset_bottom = 150.0
+grow_vertical = 2
+theme_override_constants/separation = 46
+alignment = 1
+
+[node name="HostGame" type="Button" parent="MainButtons" unique_id=195043171]
+layout_mode = 2
+theme_override_colors/font_hover_color = Color(1, 0.9533334, 0.3, 1)
+theme_override_fonts/font = ExtResource("4_30wg0")
+theme_override_font_sizes/font_size = 60
+theme_override_styles/normal = ExtResource("5_30wg0")
+theme_override_styles/hover = ExtResource("5_30wg0")
+text = "HOST GAME"
+alignment = 0
+
+[node name="JoinGame" type="Button" parent="MainButtons" unique_id=1958377949]
+layout_mode = 2
+theme_override_colors/font_hover_color = Color(1, 0.9529412, 0.3019608, 1)
+theme_override_fonts/font = ExtResource("4_30wg0")
+theme_override_font_sizes/font_size = 60
+theme_override_styles/normal = ExtResource("5_30wg0")
+theme_override_styles/hover = ExtResource("5_30wg0")
+text = "JOIN GAME"
+alignment = 0
+
+[node name="Settings" type="Button" parent="MainButtons" unique_id=1071387604]
+layout_mode = 2
+theme_override_colors/font_hover_color = Color(1, 0.9529412, 0.3019608, 1)
+theme_override_fonts/font = ExtResource("4_30wg0")
+theme_override_font_sizes/font_size = 60
+theme_override_styles/normal = ExtResource("5_30wg0")
+theme_override_styles/hover = ExtResource("5_30wg0")
+text = "SETTINGS"
+alignment = 0
+
+[node name="HBoxContainer" type="VBoxContainer" parent="." unique_id=179866945]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 114.0
+offset_top = -241.0
+offset_right = 477.0
+offset_bottom = -73.0
+grow_vertical = 0
+alignment = 1
+
+[node name="QuitToDesktop" type="Button" parent="HBoxContainer" unique_id=1944938794]
+layout_mode = 2
+theme_override_colors/font_hover_color = Color(1, 0.9529412, 0.3019608, 1)
+theme_override_fonts/font = ExtResource("4_30wg0")
+theme_override_font_sizes/font_size = 48
+theme_override_styles/normal = ExtResource("5_30wg0")
+theme_override_styles/hover = ExtResource("5_30wg0")
+text = "QUIT TO DESKTOP"
+alignment = 0
+
+[node name="QuitDelay" type="Timer" parent="." unique_id=1250745160]
+wait_time = 0.25
+
+[node name="Click" type="AudioStreamPlayer" parent="." unique_id=2002464732]
+stream = ExtResource("2_ij7vn")
+bus = &"UI"
+
+[node name="Hover" type="AudioStreamPlayer" parent="." unique_id=228091957]
+stream = ExtResource("3_yjgyn")
+bus = &"UI"
+
+[node name="SettingsMenu" parent="." unique_id=818635734 instance=ExtResource("4_rqbgu")]
+visible = false
+layout_mode = 1
+
+[node name="HostMenu" parent="." unique_id=1774135477 instance=ExtResource("5_host")]
+visible = false
+layout_mode = 1
+
+[node name="JoinMenu" parent="." unique_id=1259590996 instance=ExtResource("6_join")]
+visible = false
+layout_mode = 1
+
+[node name="LobbyMenu" parent="." unique_id=119141558 instance=ExtResource("7_lobby")]
+visible = false
+layout_mode = 1
+
+[connection signal="mouse_entered" from="MainButtons/HostGame" to="." method="_on_host_game_mouse_entered"]
+[connection signal="pressed" from="MainButtons/HostGame" to="." method="_on_host_game_pressed"]
+[connection signal="mouse_entered" from="MainButtons/JoinGame" to="." method="_on_join_game_mouse_entered"]
+[connection signal="pressed" from="MainButtons/JoinGame" to="." method="_on_join_game_pressed"]
+[connection signal="mouse_entered" from="MainButtons/Settings" to="." method="_on_settings_mouse_entered"]
+[connection signal="pressed" from="MainButtons/Settings" to="." method="_on_settings_pressed"]
+[connection signal="mouse_entered" from="HBoxContainer/QuitToDesktop" to="." method="_on_quit_to_desktop_mouse_entered"]
+[connection signal="pressed" from="HBoxContainer/QuitToDesktop" to="." method="_on_quit_to_desktop_pressed"]
+[connection signal="timeout" from="QuitDelay" to="." method="_on_quit_delay_timeout"]

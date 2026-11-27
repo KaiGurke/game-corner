@@ -1,0 +1,34 @@
+[gd_resource type="Resource" script_class="FuncGodotFGDSolidClass" format=3 uid="uid://daybxhwamr4vg"]
+
+[ext_resource type="Script" uid="uid://5cow84q03m6a" path="res://addons/func_godot/src/fgd/func_godot_fgd_solid_class.gd" id="1_solid"]
+[ext_resource type="Script" uid="uid://bijbv7gssp4xt" path="res://addons/scripts/map_utils/worldspawn_area.gd" id="2_script"]
+
+[resource]
+script = ExtResource("1_solid")
+origin_type = 4
+collision_layer = 0
+collision_mask = 0
+script_class = ExtResource("2_script")
+classname = "game_spawn_area"
+description = "Player spawn volume. Center or Random position, optional facing / random facing, ground snap with gap."
+class_properties = Dictionary[String, Variant]({
+"facing_degrees": 0.0,
+"ground_gap": 0.05,
+"randomize_facing": false,
+"spawn_mode": {
+"Center": 0,
+"Random": 1
+}
+})
+class_property_descriptions = Dictionary[String, Variant]({
+"facing_degrees": "Yaw in degrees the player faces (0 = -Z)",
+"ground_gap": "Height above the floor so the player is not stuck in geometry",
+"randomize_facing": "Random yaw instead of facing_degrees",
+"spawn_mode": ["Where inside the brush to pick the spawn point", 1]
+})
+auto_apply_to_matching_node_properties = true
+meta_properties = Dictionary[String, Variant]({
+"color": Color(0.2, 0.9, 0.3, 1)
+})
+node_class = "Area3D"
+node_groups = Array[String](["spawn_area", "worldspawn_area"])

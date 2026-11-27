@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="ResonanceGeometryAsset" inherits="Resource" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../class.xsd">
+	<brief_description>
+		Serialized Steam Audio mesh data for static packs and dynamic geometry assets.
+	</brief_description>
+	<description>
+		Holds data from iplStaticMeshSave. Used as [member ResonanceStaticScene.static_scene_asset] (editor export or in-memory [url=#ResonanceRuntimeExporter]ResonanceRuntimeExporter[/url] / [method ResonanceServer.export_static_scene_to_geometry_asset]) and as [member ResonanceGeometry.mesh_asset] when dynamic is true. Create static packs via Export Active Scene or the runtime exporter; create dynamic assets via Nexus Resonance/Export Dynamic Mesh with a ResonanceGeometry selected.
+	</description>
+	<tutorials>
+	</tutorials>
+	<members>
+		<member name="mesh_data" type="PackedByteArray" setter="set_mesh_data" getter="get_mesh_data">
+			Serialized Phonon mesh bytes. Set automatically during export.
+		</member>
+		<member name="triangle_count" type="int" setter="set_triangle_count" getter="get_triangle_count">
+			Triangle count (set during export, used for notify_geometry_changed).
+		</member>
+	</members>
+</class>

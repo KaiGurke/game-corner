@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dprxrxph1bb4f"
+path="res://.godot/imported/5. Faster.wav-79d7a0fbc069db61087c362b726e875d.sample"
+
+[deps]
+
+source_file="res://assets/sounds/music/5. Faster.wav"
+dest_files=["res://.godot/imported/5. Faster.wav-79d7a0fbc069db61087c362b726e875d.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

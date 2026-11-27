@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="ResonanceBakeConfig" inherits="Resource" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../class.xsd">
+	<brief_description>
+		Per-volume bake quality settings for Steam Audio probes.
+	</brief_description>
+	<description>
+		Assign to [member ResonanceProbeVolume.bake_config]. Auto-created when empty in the editor; save as .tres for presets. When null at bake time, [method create_default] is used.
+		Controls rays, bounces, threads, and optional Bake Ambisonic Order. Reflection type and pathing on/off follow [url=#ResonanceRuntimeConfig]ResonanceRuntimeConfig[/url] on [ResonanceRuntime] (legacy [member reflection_type] / [member pathing_enabled] are ignored for gating). Static passes follow [member ResonanceProbeVolume.bake_sources] / [member bake_listeners].
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="get_bake_params">
+			<return type="Dictionary" />
+			<description>
+				Bake quality dictionary (rays, bounces, threads, Ambisonic Order, reflection type). Pathing visibility keys come from [url=#ResonanceRuntimeConfig]ResonanceRuntimeConfig[/url] at bake time.
+			</description>
+		</method>
+		<method name="create_default" qualifiers="static">
+			<return type="ResonanceBakeConfig" />
+			<description>
+				Default config when [member ResonanceProbeVolume.bake_config] is null.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="reflection_type" type="int" default="2">
+			Legacy serialization field. Ignored for bake gating; bake uses [member ResonanceRuntimeConfig.reflection_type] (TAN maps to Convolution). Hidden in the inspector.
+		</member>
+		<member name="pathing_enabled" type="bool" default="false">
+			Legacy serialization field. Ignored for bake gating; pathing follows [member ResonanceRuntimeConfig.pathing_enabled]. Hidden in the inspector.
+		</member>
+		<member name="static_source_enabled" type="bool" default="false">
+			Legacy flag. Ignored for bake gating; STATICSOURCE runs when [member ResonanceProbeVolume.bake_sources] has a valid [ResonancePlayer]. Hidden in the inspector.
+		</member>
+		<member name="static_listener_enabled" type="bool" default="false">
+			Legacy flag. Ignored for bake gating; STATICLISTENER runs when [member ResonanceProbeVolume.bake_listeners] has a valid [ResonanceListener]. Hidden in the inspector.
+		</member>
+		<member name="bake_ambisonics_order" type="int" default="0">
+			[code]0[/code] Use Global ([member ResonanceRuntimeConfig.bake_ambisonic_order]), [code]1[/code]-[code]3[/code] override. Mismatch vs [member ResonanceProbeData.baked_ambisonics_order] warns; playback uses [code]min(baked, realtime)[/code].
+		</member>
+		<member name="bake_num_rays" type="int" default="4096">
+			Reflection rays per probe (256-16384). More rays = higher quality, longer bake.
+		</member>
+		<member name="bake_num_bounces" type="int" default="4">
+			Reflection bounces per ray (1-32). More bounces = longer reverb tail and bake.
+		</member>
+		<member name="bake_num_threads" type="int" default="2">
+			Parallel bake worker threads (1-64). Affects duration only; not in probe outdated hashes.
+		</member>
+	</members>
+</class>

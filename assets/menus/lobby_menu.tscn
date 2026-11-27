@@ -1,0 +1,173 @@
+[gd_scene format=3 uid="uid://itevjcbp8jry"]
+
+[ext_resource type="Script" uid="uid://dxhlnjga82tf0" path="res://scripts/lobby_menu.gd" id="1_lobby"]
+[ext_resource type="AudioStream" uid="uid://devt0a8u51ugh" path="res://assets/sounds/ui/clicks_pops/sfx_clicks_pops_01_soft_click.ogg" id="2_click"]
+[ext_resource type="AudioStream" uid="uid://bobj0yvaqrdmx" path="res://assets/sounds/ui/hover_soft_tick/sfx_hover_soft_tick_01_tick_soft.ogg" id="3_hover"]
+[ext_resource type="FontFile" uid="uid://2qyo6se1m5rn" path="res://assets/fonts/Remingtoned Type.ttf" id="4_title"]
+[ext_resource type="FontFile" uid="uid://bmlerudscjs5e" path="res://assets/fonts/HomeVideo-Regular.ttf" id="5_body"]
+[ext_resource type="FontFile" uid="uid://ifu2mj4o5rg8" path="res://assets/fonts/HomeVideo-Bold.ttf" id="6_bold"]
+[ext_resource type="StyleBox" uid="uid://y5v63t6ijf5b" path="res://assets/styles/grey_bottom_line.tres" id="7_btn"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_list"]
+bg_color = Color(0, 0.18, 0.34, 0.45)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_list_sel"]
+
+[node name="LobbyMenu" type="Control" unique_id=547676322]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_lobby")
+
+[node name="Dim" type="ColorRect" parent="." unique_id=1033509494]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.023529412, 0.023529412, 0.023529412, 1)
+
+[node name="LeftPanel" type="VBoxContainer" parent="." unique_id=287298062]
+layout_mode = 0
+offset_left = 80.0
+offset_top = 80.0
+offset_right = 520.0
+offset_bottom = 980.0
+theme_override_constants/separation = 12
+
+[node name="Title" type="Label" parent="LeftPanel" unique_id=1131025553]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("4_title")
+theme_override_font_sizes/font_size = 36
+text = "LOBBY"
+
+[node name="Subtitle" type="Label" parent="LeftPanel" unique_id=483591887]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("5_body")
+theme_override_font_sizes/font_size = 18
+text = "Waiting for host — settings update live"
+
+[node name="GameLabel" type="Label" parent="LeftPanel" unique_id=977532092]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("5_body")
+theme_override_font_sizes/font_size = 18
+text = "Game"
+
+[node name="GameValue" type="Label" parent="LeftPanel" unique_id=843091339]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("5_body")
+theme_override_font_sizes/font_size = 24
+text = "—"
+
+[node name="GamemodeLabel" type="Label" parent="LeftPanel" unique_id=21332696]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("5_body")
+theme_override_font_sizes/font_size = 18
+text = "Gamemode"
+
+[node name="GamemodeValue" type="Label" parent="LeftPanel" unique_id=416456914]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("5_body")
+theme_override_font_sizes/font_size = 24
+text = "—"
+
+[node name="MapLabel" type="Label" parent="LeftPanel" unique_id=457936327]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("5_body")
+theme_override_font_sizes/font_size = 18
+text = "Map"
+
+[node name="MapValue" type="Label" parent="LeftPanel" unique_id=1117798734]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("5_body")
+theme_override_font_sizes/font_size = 24
+text = "—"
+
+[node name="MaxPlayersLabel" type="Label" parent="LeftPanel" unique_id=1611929762]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("5_body")
+theme_override_font_sizes/font_size = 18
+text = "Max Players"
+
+[node name="MaxPlayersValue" type="Label" parent="LeftPanel" unique_id=1794665675]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("5_body")
+theme_override_font_sizes/font_size = 24
+text = "—"
+
+[node name="StatusLabel" type="Label" parent="LeftPanel" unique_id=1645019273]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("5_body")
+theme_override_font_sizes/font_size = 18
+text = "Connected — waiting for host to start"
+autowrap_mode = 2
+
+[node name="LeaveButton" type="Button" parent="LeftPanel" unique_id=149024560]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(1, 0.953, 0.3, 1)
+theme_override_fonts/font = ExtResource("4_title")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = ExtResource("7_btn")
+theme_override_styles/pressed = ExtResource("7_btn")
+theme_override_styles/hover = ExtResource("7_btn")
+text = "LEAVE LOBBY"
+
+[node name="RightPanel" type="VBoxContainer" parent="." unique_id=854709310]
+layout_mode = 0
+offset_left = 1200.0
+offset_top = 80.0
+offset_right = 1840.0
+offset_bottom = 980.0
+theme_override_constants/separation = 12
+
+[node name="PlayersTitle" type="Label" parent="RightPanel" unique_id=1053071557]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("6_bold")
+theme_override_font_sizes/font_size = 28
+text = "PLAYERS"
+
+[node name="PlayerList" type="ItemList" parent="RightPanel" unique_id=1119407956]
+custom_minimum_size = Vector2(0, 600)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hovered_color = Color(1, 1, 1, 1)
+theme_override_colors/font_selected_color = Color(1, 1, 1, 1)
+theme_override_constants/v_separation = 4
+theme_override_fonts/font = ExtResource("5_body")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/panel = SubResource("StyleBoxFlat_list")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_list_sel")
+theme_override_styles/hovered = SubResource("StyleBoxEmpty_list_sel")
+theme_override_styles/selected = SubResource("StyleBoxEmpty_list_sel")
+theme_override_styles/selected_focus = SubResource("StyleBoxEmpty_list_sel")
+theme_override_styles/cursor_unfocused = SubResource("StyleBoxEmpty_list_sel")
+theme_override_styles/cursor = SubResource("StyleBoxEmpty_list_sel")
+
+[node name="Click" type="AudioStreamPlayer" parent="." unique_id=1726768488]
+stream = ExtResource("2_click")
+bus = &"UI"
+
+[node name="Hover" type="AudioStreamPlayer" parent="." unique_id=1928661583]
+stream = ExtResource("3_hover")
+bus = &"UI"
+
+[connection signal="mouse_entered" from="LeftPanel/LeaveButton" to="." method="_on_any_hover"]
+[connection signal="pressed" from="LeftPanel/LeaveButton" to="." method="_on_leave_pressed"]

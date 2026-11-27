@@ -1,0 +1,10 @@
+[gd_resource type="ResonanceMaterial" format=3 uid="uid://rb8c736kvibo"]
+
+[resource]
+absorption_low = 0.017
+absorption_mid = 0.044
+absorption_high = 0.091
+scattering = 0.21
+transmission_low = 0.5
+transmission_mid = 0.1
+transmission_high = 0.028

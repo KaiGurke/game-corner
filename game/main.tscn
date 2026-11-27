@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://bsabsfoudva7d"]
+
+[ext_resource type="PackedScene" uid="uid://di6jgko7ni684" path="res://game/map_manager.tscn" id="1_oa506"]
+[ext_resource type="PackedScene" path="res://assets/menus/loading_screen.tscn" id="2_loading"]
+
+[node name="Main" type="Node" unique_id=588358738]
+
+[node name="Map Manager" parent="." unique_id=1654210332 instance=ExtResource("1_oa506")]
+
+[node name="LoadingScreen" parent="." unique_id=1518118325 instance=ExtResource("2_loading")]

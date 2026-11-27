@@ -1,0 +1,195 @@
+[gd_scene format=3 uid="uid://cjnejvy3jwgrc"]
+
+[ext_resource type="Script" uid="uid://cswkqvcf3t3pk" path="res://scripts/escape_menu.gd" id="1_kltnv"]
+[ext_resource type="AudioStream" uid="uid://devt0a8u51ugh" path="res://assets/sounds/ui/clicks_pops/sfx_clicks_pops_01_soft_click.ogg" id="2_le8q5"]
+[ext_resource type="FontFile" uid="uid://bmlerudscjs5e" path="res://assets/fonts/HomeVideo-Regular.ttf" id="3_65ddm"]
+[ext_resource type="AudioStream" uid="uid://bobj0yvaqrdmx" path="res://assets/sounds/ui/hover_soft_tick/sfx_hover_soft_tick_01_tick_soft.ogg" id="3_412u3"]
+[ext_resource type="FontFile" uid="uid://ifu2mj4o5rg8" path="res://assets/fonts/HomeVideo-Bold.ttf" id="4_ffnk1"]
+[ext_resource type="PackedScene" uid="uid://35liah1guelk" path="res://assets/menus/settings_menu.tscn" id="4_xa04s"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kltnv"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_le8q5"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_412u3"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xa04s"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_43ktc"]
+
+[node name="EscapeMenu" type="CanvasLayer" unique_id=178182607]
+script = ExtResource("1_kltnv")
+
+[node name="Control" type="Control" parent="." unique_id=1683860016]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MenuBar" type="ColorRect" parent="Control" unique_id=1908623064]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 184.0
+offset_top = -540.0
+offset_right = 831.0
+offset_bottom = 540.0
+grow_vertical = 2
+color = Color(0, 0, 0, 0.654902)
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Control/MenuBar" unique_id=914118171]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -294.5
+offset_top = 78.0
+offset_right = 288.5
+offset_bottom = 312.0
+grow_horizontal = 2
+theme_override_colors/default_color = Color(0.78, 0.533, 0, 1)
+theme_override_fonts/normal_font = ExtResource("4_ffnk1")
+theme_override_font_sizes/normal_font_size = 80
+text = "Game Corner:
+THE GAME"
+horizontal_alignment = 1
+
+[node name="BoxContainer" type="BoxContainer" parent="Control/MenuBar" unique_id=1872955729]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -240.5
+offset_top = -173.0
+offset_right = 240.5
+offset_bottom = 257.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 30
+vertical = true
+
+[node name="Resume" type="Button" parent="Control/MenuBar/BoxContainer" unique_id=790599692]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.66656804, 0.66656905, 0.6665682, 1)
+theme_override_fonts/font = ExtResource("3_65ddm")
+theme_override_font_sizes/font_size = 80
+theme_override_styles/normal = SubResource("StyleBoxEmpty_kltnv")
+text = "RESUME"
+alignment = 0
+
+[node name="Settings" type="Button" parent="Control/MenuBar/BoxContainer" unique_id=414533548]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6666667, 0.6666667, 0.6666667, 1)
+theme_override_fonts/font = ExtResource("3_65ddm")
+theme_override_font_sizes/font_size = 80
+theme_override_styles/normal = SubResource("StyleBoxEmpty_le8q5")
+text = "SETTINGS"
+alignment = 0
+
+[node name="Suicide" type="Button" parent="Control/MenuBar/BoxContainer" unique_id=916764648]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6666667, 0.6666667, 0.6666667, 1)
+theme_override_fonts/font = ExtResource("3_65ddm")
+theme_override_font_sizes/font_size = 80
+theme_override_styles/normal = SubResource("StyleBoxEmpty_412u3")
+text = "SUICIDE"
+alignment = 0
+
+[node name="Main Menu" type="Button" parent="Control/MenuBar/BoxContainer" unique_id=1229529023]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6666667, 0.6666667, 0.6666667, 1)
+theme_override_fonts/font = ExtResource("3_65ddm")
+theme_override_font_sizes/font_size = 80
+theme_override_styles/normal = SubResource("StyleBoxEmpty_412u3")
+text = "LEAVE"
+alignment = 0
+
+[node name="BoxContainer2" type="BoxContainer" parent="Control/MenuBar" unique_id=1089096802]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -261.5
+offset_top = -208.0
+offset_right = 261.5
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 69
+alignment = 1
+vertical = true
+
+[node name="Quit" type="Button" parent="Control/MenuBar/BoxContainer2" unique_id=296172364]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6666667, 0.6666667, 0.6666667, 1)
+theme_override_fonts/font = ExtResource("3_65ddm")
+theme_override_font_sizes/font_size = 45
+theme_override_styles/normal = SubResource("StyleBoxEmpty_xa04s")
+text = "QUIT TO DESKTOP"
+alignment = 0
+
+[node name="ModelPlaceholder" type="ColorRect" parent="Control" unique_id=349680488]
+layout_mode = 0
+offset_left = 1171.0
+offset_top = 283.0
+offset_right = 1597.0
+offset_bottom = 915.0
+
+[node name="ChangeModel" type="Button" parent="Control/ModelPlaceholder" unique_id=1827111455]
+layout_mode = 0
+offset_top = -93.0
+offset_right = 426.0
+offset_bottom = -10.0
+theme_override_colors/font_color = Color(0.13349998, 0.6378332, 0.89, 1)
+theme_override_fonts/font = ExtResource("4_ffnk1")
+theme_override_font_sizes/font_size = 47
+theme_override_styles/normal = SubResource("StyleBoxEmpty_43ktc")
+text = "CHANGE MODEL"
+
+[node name="PlaceholderLabel" type="Label" parent="Control/ModelPlaceholder" unique_id=1268745495]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 6.0
+offset_right = 424.0
+offset_bottom = 631.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_65ddm")
+theme_override_font_sizes/font_size = 35
+text = "View current 
+3D Model here
+(currently there
+are none)"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="QuitDelay" type="Timer" parent="." unique_id=360587509]
+wait_time = 0.25
+
+[node name="Click" type="AudioStreamPlayer" parent="." unique_id=1143992292]
+stream = ExtResource("2_le8q5")
+bus = &"UI"
+
+[node name="Hover" type="AudioStreamPlayer" parent="." unique_id=1125893636]
+stream = ExtResource("3_412u3")
+bus = &"UI"
+
+[node name="SettingsMenu" parent="." unique_id=818635734 instance=ExtResource("4_xa04s")]
+visible = false
+
+[connection signal="mouse_entered" from="Control/MenuBar/BoxContainer/Resume" to="." method="_on_resume_mouse_entered"]
+[connection signal="pressed" from="Control/MenuBar/BoxContainer/Resume" to="." method="_on_resume_pressed"]
+[connection signal="mouse_entered" from="Control/MenuBar/BoxContainer/Settings" to="." method="_on_settings_mouse_entered"]
+[connection signal="pressed" from="Control/MenuBar/BoxContainer/Settings" to="." method="_on_settings_pressed"]
+[connection signal="mouse_entered" from="Control/MenuBar/BoxContainer/Suicide" to="." method="_on_suicide_mouse_entered"]
+[connection signal="pressed" from="Control/MenuBar/BoxContainer/Suicide" to="." method="_on_suicide_pressed"]
+[connection signal="mouse_entered" from="Control/MenuBar/BoxContainer/Main Menu" to="." method="_on_main_menu_mouse_entered"]
+[connection signal="pressed" from="Control/MenuBar/BoxContainer/Main Menu" to="." method="_on_main_menu_pressed"]
+[connection signal="mouse_entered" from="Control/MenuBar/BoxContainer2/Quit" to="." method="_on_quit_mouse_entered"]
+[connection signal="pressed" from="Control/MenuBar/BoxContainer2/Quit" to="." method="_on_quit_pressed"]
+[connection signal="timeout" from="QuitDelay" to="." method="_on_quit_delay_timeout"]

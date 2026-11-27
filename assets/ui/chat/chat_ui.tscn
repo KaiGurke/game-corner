@@ -1,0 +1,93 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/chat_ui.gd" id="1_chat"]
+
+[node name="ChatUI" type="CanvasLayer"]
+layer = 1
+script = ExtResource("1_chat")
+font_size = 18
+
+[node name="Root" type="PanelContainer" parent="."]
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.38
+anchor_right = 0.42
+anchor_bottom = 0.82
+offset_left = 12.0
+offset_top = 12.0
+offset_right = -12.0
+offset_bottom = -12.0
+mouse_filter = 2
+
+[node name="VBox" type="VBoxContainer" parent="Root"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="MessageArea" type="Control" parent="Root/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+clip_contents = true
+mouse_filter = 2
+
+[node name="MessageScroll" type="ScrollContainer" parent="Root/VBox/MessageArea"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 0
+mouse_filter = 2
+
+[node name="MessageList" type="VBoxContainer" parent="Root/VBox/MessageArea/MessageScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 4
+alignment = 2
+mouse_filter = 2
+
+[node name="LiveLayer" type="Control" parent="Root/VBox/MessageArea"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="LiveList" type="VBoxContainer" parent="Root/VBox/MessageArea/LiveLayer"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -8.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 4
+alignment = 2
+mouse_filter = 2
+
+[node name="InputRow" type="HBoxContainer" parent="Root/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 6
+modulate = Color(1, 1, 1, 0)
+
+[node name="LineEdit" type="LineEdit" parent="Root/VBox/InputRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Say something..."
+max_length = 500
+caret_blink = true
+
+[node name="EmojiButton" type="Button" parent="Root/VBox/InputRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(36, 0)
+text = ":)"
+tooltip_text = "Emojis"
+
+[node name="SendButton" type="Button" parent="Root/VBox/InputRow"]
+layout_mode = 2
+text = "Send"

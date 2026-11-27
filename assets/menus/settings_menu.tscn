@@ -1,0 +1,469 @@
+[gd_scene format=3 uid="uid://35liah1guelk"]
+
+[ext_resource type="Script" uid="uid://c8bqx2qhvdh80" path="res://scripts/settings_menu.gd" id="1_6mcme"]
+[ext_resource type="Theme" uid="uid://dklq1hdph1dhw" path="res://assets/menus/settings_theme.tres" id="2_v0bl3"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_section"]
+content_margin_left = 12.0
+content_margin_top = 10.0
+content_margin_right = 12.0
+content_margin_bottom = 10.0
+bg_color = Color(0.08, 0.08, 0.08, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nav"]
+bg_color = Color(0.1, 0.1, 0.1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_exit"]
+bg_color = Color(0.78686726, 0.16723144, 0.14387369, 1)
+
+[node name="SettingsMenu" type="Control" unique_id=647695470]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_6mcme")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=416789618]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.06, 0.06, 0.06, 0.47843137)
+
+[node name="TabContainer" type="TabContainer" parent="." unique_id=252492906]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -732.0
+offset_top = -473.0
+offset_right = 732.0
+offset_bottom = 473.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_v0bl3")
+current_tab = 0
+
+[node name="General" type="MarginContainer" parent="TabContainer" unique_id=2039476492]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+metadata/_tab_index = 0
+
+[node name="ScrollContainer" type="ScrollContainer" parent="TabContainer/General" unique_id=1694087461]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="Content" type="VBoxContainer" parent="TabContainer/General/ScrollContainer" unique_id=1454382675]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 20
+
+[node name="MouseHeader" type="Label" parent="TabContainer/General/ScrollContainer/Content" unique_id=1981727136]
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+text = "Mouse"
+
+[node name="MouseSection" type="PanelContainer" parent="TabContainer/General/ScrollContainer/Content" unique_id=869993271]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_section")
+
+[node name="MouseVBox" type="VBoxContainer" parent="TabContainer/General/ScrollContainer/Content/MouseSection" unique_id=663345201]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="SensitivityRow" type="HBoxContainer" parent="TabContainer/General/ScrollContainer/Content/MouseSection/MouseVBox" unique_id=1863425453]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="SensitivityLabel" type="Label" parent="TabContainer/General/ScrollContainer/Content/MouseSection/MouseVBox/SensitivityRow" unique_id=917966551]
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "Sensitivity"
+
+[node name="SensitivitySlider" type="HSlider" parent="TabContainer/General/ScrollContainer/Content/MouseSection/MouseVBox/SensitivityRow" unique_id=398648923]
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 0.1
+max_value = 5.0
+step = 0.05
+value = 1.0
+
+[node name="SensitivityValue" type="Label" parent="TabContainer/General/ScrollContainer/Content/MouseSection/MouseVBox/SensitivityRow" unique_id=2058464481]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "1.00"
+horizontal_alignment = 2
+
+[node name="Controls" type="MarginContainer" parent="TabContainer" unique_id=489570719]
+visible = false
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+metadata/_tab_index = 1
+
+[node name="HBox" type="HBoxContainer" parent="TabContainer/Controls" unique_id=1438694530]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="NavPanel" type="PanelContainer" parent="TabContainer/Controls/HBox" unique_id=878615761]
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_nav")
+
+[node name="NavButtons" type="VBoxContainer" parent="TabContainer/Controls/HBox/NavPanel" unique_id=829231065]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="NavTitle" type="Label" parent="TabContainer/Controls/HBox/NavPanel/NavButtons" unique_id=281346520]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Jump to"
+horizontal_alignment = 1
+
+[node name="BtnMovement" type="Button" parent="TabContainer/Controls/HBox/NavPanel/NavButtons" unique_id=1232082418]
+layout_mode = 2
+text = "Movement"
+
+[node name="BtnEquipment" type="Button" parent="TabContainer/Controls/HBox/NavPanel/NavButtons" unique_id=99190412]
+layout_mode = 2
+text = "Equipment"
+
+[node name="BtnOther" type="Button" parent="TabContainer/Controls/HBox/NavPanel/NavButtons" unique_id=1825314786]
+layout_mode = 2
+text = "Other"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="TabContainer/Controls/HBox" unique_id=1463230728]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="Content" type="VBoxContainer" parent="TabContainer/Controls/HBox/ScrollContainer" unique_id=900242995]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 24
+
+[node name="SectionMovement" type="VBoxContainer" parent="TabContainer/Controls/HBox/ScrollContainer/Content" unique_id=376483295]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="HeaderMovement" type="Label" parent="TabContainer/Controls/HBox/ScrollContainer/Content/SectionMovement" unique_id=1523866592]
+layout_mode = 2
+theme_override_font_sizes/font_size = 26
+text = "Movement"
+
+[node name="BindsMovement" type="VBoxContainer" parent="TabContainer/Controls/HBox/ScrollContainer/Content/SectionMovement" unique_id=1295974000]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="SectionEquipment" type="VBoxContainer" parent="TabContainer/Controls/HBox/ScrollContainer/Content" unique_id=2069208232]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="HeaderEquipment" type="Label" parent="TabContainer/Controls/HBox/ScrollContainer/Content/SectionEquipment" unique_id=1465393400]
+layout_mode = 2
+theme_override_font_sizes/font_size = 26
+text = "Equipment"
+
+[node name="BindsEquipment" type="VBoxContainer" parent="TabContainer/Controls/HBox/ScrollContainer/Content/SectionEquipment" unique_id=895605900]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="SectionOther" type="VBoxContainer" parent="TabContainer/Controls/HBox/ScrollContainer/Content" unique_id=1500379707]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="HeaderOther" type="Label" parent="TabContainer/Controls/HBox/ScrollContainer/Content/SectionOther" unique_id=767514166]
+layout_mode = 2
+theme_override_font_sizes/font_size = 26
+text = "Other"
+
+[node name="BindsOther" type="VBoxContainer" parent="TabContainer/Controls/HBox/ScrollContainer/Content/SectionOther" unique_id=1720750552]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Crosshair" type="MarginContainer" parent="TabContainer" unique_id=942408281]
+visible = false
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+metadata/_tab_index = 2
+
+[node name="Placeholder" type="Label" parent="TabContainer/Crosshair" unique_id=1951089205]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "Crosshair settings coming soon."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Audio" type="MarginContainer" parent="TabContainer" unique_id=674626120]
+visible = false
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+metadata/_tab_index = 3
+
+[node name="AudioTabs" type="TabContainer" parent="TabContainer/Audio" unique_id=682761049]
+layout_mode = 2
+theme = ExtResource("2_v0bl3")
+current_tab = 0
+
+[node name="General" type="MarginContainer" parent="TabContainer/Audio/AudioTabs" unique_id=1751223060]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+metadata/_tab_index = 0
+
+[node name="Volumes" type="VBoxContainer" parent="TabContainer/Audio/AudioTabs/General" unique_id=815780728]
+layout_mode = 2
+theme_override_constants/separation = 28
+
+[node name="MasterRow" type="VBoxContainer" parent="TabContainer/Audio/AudioTabs/General/Volumes" unique_id=225811717]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Label" type="Label" parent="TabContainer/Audio/AudioTabs/General/Volumes/MasterRow" unique_id=1266331357]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "Master"
+
+[node name="MasterVolumeSlider" type="HSlider" parent="TabContainer/Audio/AudioTabs/General/Volumes/MasterRow" unique_id=1783081329]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+max_value = 1.0
+step = 0.05
+value = 1.0
+
+[node name="MusicRow" type="VBoxContainer" parent="TabContainer/Audio/AudioTabs/General/Volumes" unique_id=1191531066]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Label" type="Label" parent="TabContainer/Audio/AudioTabs/General/Volumes/MusicRow" unique_id=877547396]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "Music"
+
+[node name="MusicVolumeSlider" type="HSlider" parent="TabContainer/Audio/AudioTabs/General/Volumes/MusicRow" unique_id=1846632916]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+max_value = 1.0
+step = 0.05
+value = 1.0
+
+[node name="UIRow" type="VBoxContainer" parent="TabContainer/Audio/AudioTabs/General/Volumes" unique_id=1139409919]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Label" type="Label" parent="TabContainer/Audio/AudioTabs/General/Volumes/UIRow" unique_id=784020537]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "UI"
+
+[node name="UIVolumeSlider" type="HSlider" parent="TabContainer/Audio/AudioTabs/General/Volumes/UIRow" unique_id=48033325]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+max_value = 1.0
+step = 0.05
+value = 1.0
+
+[node name="Voice Chat" type="MarginContainer" parent="TabContainer/Audio/AudioTabs" unique_id=1205415500]
+visible = false
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+metadata/_tab_index = 1
+
+[node name="Placeholder" type="Label" parent="TabContainer/Audio/AudioTabs/Voice Chat" unique_id=1443377424]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "Voice chat settings coming soon."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Video" type="MarginContainer" parent="TabContainer" unique_id=903107812]
+visible = false
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+metadata/_tab_index = 4
+
+[node name="VideoTabs" type="TabContainer" parent="TabContainer/Video" unique_id=2061490262]
+layout_mode = 2
+theme = ExtResource("2_v0bl3")
+current_tab = 0
+
+[node name="General" type="MarginContainer" parent="TabContainer/Video/VideoTabs" unique_id=1201305213]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 16
+metadata/_tab_index = 0
+
+[node name="Rows" type="HBoxContainer" parent="TabContainer/Video/VideoTabs/General" unique_id=851148595]
+layout_mode = 2
+theme_override_constants/separation = 40
+
+[node name="Labels" type="VBoxContainer" parent="TabContainer/Video/VideoTabs/General/Rows" unique_id=1473645771]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 18
+
+[node name="ScreenResolution" type="Label" parent="TabContainer/Video/VideoTabs/General/Rows/Labels" unique_id=754289837]
+layout_mode = 2
+theme_override_font_sizes/font_size = 26
+text = "Screen Resolution"
+horizontal_alignment = 2
+
+[node name="WindowMode" type="Label" parent="TabContainer/Video/VideoTabs/General/Rows/Labels" unique_id=774604717]
+layout_mode = 2
+theme_override_font_sizes/font_size = 26
+text = "Window Mode"
+horizontal_alignment = 2
+
+[node name="VSync" type="Label" parent="TabContainer/Video/VideoTabs/General/Rows/Labels" unique_id=246847387]
+layout_mode = 2
+theme_override_font_sizes/font_size = 26
+text = "V-Sync"
+horizontal_alignment = 2
+
+[node name="FPSLimit" type="Label" parent="TabContainer/Video/VideoTabs/General/Rows/Labels" unique_id=479267664]
+layout_mode = 2
+theme_override_font_sizes/font_size = 26
+text = "FPS Limit"
+horizontal_alignment = 2
+
+[node name="ControlsCol" type="VBoxContainer" parent="TabContainer/Video/VideoTabs/General/Rows" unique_id=1414229231]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="WindowResolution" type="OptionButton" parent="TabContainer/Video/VideoTabs/General/Rows/ControlsCol" unique_id=1627642869]
+layout_mode = 2
+theme_override_font_sizes/font_size = 26
+selected = 0
+item_count = 5
+popup/item_0/text = "1920x1080"
+popup/item_0/id = 0
+popup/item_1/text = "1366x768"
+popup/item_1/id = 1
+popup/item_2/text = "1280x720"
+popup/item_2/id = 2
+popup/item_3/text = "2560x1440"
+popup/item_3/id = 3
+popup/item_4/text = "3840x2160"
+popup/item_4/id = 4
+
+[node name="WindowMode" type="OptionButton" parent="TabContainer/Video/VideoTabs/General/Rows/ControlsCol" unique_id=41405554]
+layout_mode = 2
+theme_override_font_sizes/font_size = 26
+selected = 0
+item_count = 5
+popup/item_0/text = "Fullscreen"
+popup/item_0/id = 0
+popup/item_1/text = "Exclusive Fullscreen"
+popup/item_1/id = 1
+popup/item_2/text = "Windowed"
+popup/item_2/id = 2
+popup/item_3/text = "Borderless Window"
+popup/item_3/id = 3
+popup/item_4/text = "Borderless Fullscreen"
+popup/item_4/id = 4
+
+[node name="VSync" type="CheckButton" parent="TabContainer/Video/VideoTabs/General/Rows/ControlsCol" unique_id=9230407]
+layout_mode = 2
+
+[node name="FPSLimit" type="OptionButton" parent="TabContainer/Video/VideoTabs/General/Rows/ControlsCol" unique_id=463268899]
+layout_mode = 2
+theme_override_font_sizes/font_size = 26
+selected = 1
+item_count = 6
+popup/item_0/text = "30"
+popup/item_0/id = 0
+popup/item_1/text = "60"
+popup/item_1/id = 1
+popup/item_2/text = "120"
+popup/item_2/id = 2
+popup/item_3/text = "165"
+popup/item_3/id = 3
+popup/item_4/text = "300"
+popup/item_4/id = 4
+popup/item_5/text = "Unlimited"
+popup/item_5/id = 5
+
+[node name="Graphics" type="MarginContainer" parent="TabContainer/Video/VideoTabs" unique_id=712532896]
+visible = false
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+metadata/_tab_index = 1
+
+[node name="Placeholder" type="Label" parent="TabContainer/Video/VideoTabs/Graphics" unique_id=1001044552]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "Graphics settings coming soon."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ExitSettings" type="Button" parent="." unique_id=407844436]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 634.0
+offset_top = -473.0
+offset_right = 732.0
+offset_bottom = -426.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_v0bl3")
+theme_override_styles/normal = SubResource("StyleBoxFlat_exit")
+text = "Exit"
+
+[connection signal="value_changed" from="TabContainer/General/ScrollContainer/Content/MouseSection/MouseVBox/SensitivityRow/SensitivitySlider" to="." method="_on_sensitivity_slider_value_changed"]
+[connection signal="pressed" from="TabContainer/Controls/HBox/NavPanel/NavButtons/BtnMovement" to="." method="_on_nav_movement_pressed"]
+[connection signal="pressed" from="TabContainer/Controls/HBox/NavPanel/NavButtons/BtnEquipment" to="." method="_on_nav_equipment_pressed"]
+[connection signal="pressed" from="TabContainer/Controls/HBox/NavPanel/NavButtons/BtnOther" to="." method="_on_nav_other_pressed"]
+[connection signal="value_changed" from="TabContainer/Audio/AudioTabs/General/Volumes/MasterRow/MasterVolumeSlider" to="." method="_on_master_volume_slider_value_changed"]
+[connection signal="value_changed" from="TabContainer/Audio/AudioTabs/General/Volumes/MusicRow/MusicVolumeSlider" to="." method="_on_music_volume_slider_value_changed"]
+[connection signal="value_changed" from="TabContainer/Audio/AudioTabs/General/Volumes/UIRow/UIVolumeSlider" to="." method="_on_ui_volume_slider_value_changed"]
+[connection signal="item_selected" from="TabContainer/Video/VideoTabs/General/Rows/ControlsCol/WindowResolution" to="." method="_on_window_resolution_item_selected"]
+[connection signal="item_selected" from="TabContainer/Video/VideoTabs/General/Rows/ControlsCol/WindowMode" to="." method="_on_window_mode_item_selected"]
+[connection signal="toggled" from="TabContainer/Video/VideoTabs/General/Rows/ControlsCol/VSync" to="." method="_on_v_sync_toggled"]
+[connection signal="item_selected" from="TabContainer/Video/VideoTabs/General/Rows/ControlsCol/FPSLimit" to="." method="_on_fps_limit_item_selected"]
+[connection signal="pressed" from="ExitSettings" to="." method="_on_exit_settings_pressed"]

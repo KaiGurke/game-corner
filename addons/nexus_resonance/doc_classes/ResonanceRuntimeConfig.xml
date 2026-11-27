@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="ResonanceRuntimeConfig" inherits="Resource" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../class.xsd">
+	<brief_description>
+		Steam Audio runtime settings for ResonanceRuntime. Structure aligned with Steam Audio Settings.
+	</brief_description>
+	<description>
+		Assign on [ResonanceRuntime]. Groups follow Steam Audio Settings (HRTF, ray tracer, occlusion, reflections, pathing, scheduling). Sample rate and frame size follow the Godot mixer, not this resource. Emits signals when reflection type, pathing, bake order, or reinit/live/routing properties change. Bus routing uses [member bus] and [member reverb_bus_name].
+	</description>
+	<tutorials>
+	</tutorials>
+	<signals>
+		<signal name="reflection_type_changed">
+			<param index="0" name="new_type" type="int" />
+			<description>
+				Emitted when [member reflection_type] changes.
+			</description>
+		</signal>
+		<signal name="pathing_enabled_changed">
+			<param index="0" name="enabled" type="bool" />
+			<description>
+				Emitted when [member pathing_enabled] changes.
+			</description>
+		</signal>
+		<signal name="bake_ambisonic_order_changed">
+			<param index="0" name="new_order" type="int" />
+			<description>
+				Emitted when [member bake_ambisonic_order] changes.
+			</description>
+		</signal>
+		<signal name="native_engine_reinit_requested">
+			<param index="0" name="property_name" type="StringName" />
+			<description>
+				Emitted when a property requires [method ResonanceServer.reinit_audio_engine].
+			</description>
+		</signal>
+		<signal name="runtime_live_config_changed">
+			<param index="0" name="property_name" type="StringName" />
+			<description>
+				Emitted when a live-patchable property changes (no full engine reinit).
+			</description>
+		</signal>
+		<signal name="runtime_routing_changed">
+			<param index="0" name="property_name" type="StringName" />
+			<description>
+				Emitted when bus routing fields change ([member bus] / [member reverb_bus_name]).
+			</description>
+		</signal>
+	</signals>
+	<methods>
+		<method name="get_effective_realtime_rays" qualifiers="static">
+			<return type="int" />
+			<param index="0" name="realtime_rays" type="int" />
+			<param index="1" name="os_name" type="String" />
+			<description>
+				Returns [param realtime_rays] unchanged. [param os_name] reserved for future per-OS caps; pass [method OS.get_name].
+			</description>
+		</method>
+		<method name="get_bus_effective">
+			<return type="StringName" />
+			<description>
+				Effective Direct + Pathing bus. Empty = Master.
+			</description>
+		</method>
+		<method name="get_reverb_bus_name_effective">
+			<return type="StringName" />
+			<description>
+				Effective reverb bus name. Empty = ResonanceReverb.
+			</description>
+		</method>
+		<method name="get_hrtf_sofa_effective">
+			<return type="ResonanceSOFAAsset" />
+			<description>
+				Active custom SOFA from [member hrtf_sofa_assets] at [member hrtf_sofa_selected_index], or first valid entry. Null = embedded HRTF.
+			</description>
+		</method>
+		<method name="get_config">
+			<return type="Dictionary" />
+			<description>
+				Dictionary for [method ResonanceServer.init_audio_engine] (includes AudioServer sample rate). Bus names are handled by [ResonanceRuntime] only.
+			</description>
+		</method>
+		<method name="create_default" qualifiers="static">
+			<return type="ResonanceRuntimeConfig" />
+			<description>
+				Default config for editor/fallback when no [ResonanceRuntime] is present.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="bus" type="StringName" default="Master">
+			Target bus for Direct + Pathing. Empty = Master. Fallback when players use Global bus override.
+		</member>
+		<member name="reverb_bus_name" type="StringName" default="ResonanceReverb">
+			Bus for [ResonanceAudioEffect] (Convolution/TAN) and the activator. Empty = ResonanceReverb. Send follows [method get_bus_effective].
+		</member>
+		<member name="use_virtual_surround" type="bool" default="false">
+			Use virtual surround instead of HRTF when applicable.
+		</member>
+		<member name="direct_speaker_channels" type="int" default="2">
+			Non-HRTF direct speaker layout channel count (1/2/4/6/8). Invalid values become stereo. Requires engine reinit while running.
+		</member>
+		<member name="direct_binaural" type="bool" default="true">
+			Default HRTF on the dry path when a player uses Use Global. Requires a loaded HRTF.
+		</member>
+		<member name="reverb_binaural" type="bool" default="true">
+			HRTF when decoding shared Convolution/TAN mixer output on [member reverb_bus_name]. Runtime change needs reinit; brief silence until prewarm.
+		</member>
+		<member name="pathing_binaural" type="bool" default="true">
+			Default HRTF in the pathing effect when a player uses Use Global.
+		</member>
+		<member name="hrtf_volume_db" type="float" default="0.0">
+			HRTF gain (dB) for the embedded default HRTF; added to each custom SOFA asset volume.
+		</member>
+		<member name="hrtf_normalization_type" type="int" default="0">
+			Embedded HRTF only: [code]0[/code] None, [code]1[/code] RMS. Custom SOFA uses the asset's norm type.
+		</member>
+		<member name="hrtf_sofa_assets" type="Array" default="[]">
+			SOFA HRTF resources. Empty = embedded default HRTF.
+		</member>
+		<member name="hrtf_sofa_selected_index" type="int" default="0">
+			Index into [member hrtf_sofa_assets] (clamped at runtime).
+		</member>
+		<member name="hrtf_interpolation_bilinear" type="bool" default="false">
+			Use bilinear HRTF interpolation (smoother motion, more CPU).
+		</member>
+		<member name="perspective_correction_enabled" type="bool" default="false">
+			Third-person perspective correction for spatialized sources. Live-patched; no engine restart.
+		</member>
+		<member name="perspective_correction_factor" type="float" default="1.0">
+			Perspective factor (0.5-2.0). Live-patched like [member perspective_correction_enabled].
+		</member>
+		<member name="default_reflections_mode" type="int" default="0">
+			For players with reflections Use Global: [code]0[/code] Baked (probes), [code]1[/code] Realtime (needs [member realtime_rays] &gt; 0).
+		</member>
+		<member name="reflection_type" type="int" default="0">
+			[code]0[/code] Convolution, [code]1[/code] Parametric, [code]2[/code] Hybrid, [code]3[/code] TrueAudio Next (AMD GPU; else falls back).
+		</member>
+		<member name="realtime_ambisonic_order" type="int" default="1">
+			Realtime HOA order (1-3) for simulator, mixer, and decode. Changing triggers engine reinit. Distinct from [member bake_ambisonic_order].
+		</member>
+		<member name="ambisonic_order" type="int" default="1">
+			Legacy alias for [member realtime_ambisonic_order] (config dict key [code]ambisonic_order[/code]).
+		</member>
+		<member name="bake_ambisonic_order" type="int" default="1">
+			Global bake HOA order for probe IRs. Per-volume override on [url=#ResonanceBakeConfig]ResonanceBakeConfig[/url]. Does not reinit the engine.
+		</member>
+		<member name="realtime_rays" type="int" default="0">
+			Realtime reflection rays. [code]0[/code] = Off. Higher = more quality and CPU; uses [member scene_type].
+		</member>
+		<member name="realtime_bounces" type="int" default="4">
+			Realtime reflection bounces (1-64).
+		</member>
+		<member name="realtime_irradiance_min_distance" type="float" default="0.1">
+			Min irradiance sampling distance (m). Only when realtime rays &gt; 0.
+		</member>
+		<member name="realtime_num_diffuse_samples" type="int" default="32">
+			Diffuse samples per reflection point (8-64).
+		</member>
+		<member name="realtime_simulation_duration" type="float" default="2.0">
+			IR duration (s) for simulation, effect allocation, and EOS tail drain (0.1-10).
+		</member>
+		<member name="hybrid_reverb_transition_time" type="float" default="1.0">
+			Hybrid: convolution IR length (s) before parametric tail. Only when Hybrid.
+		</member>
+		<member name="hybrid_reverb_overlap_percent" type="int" default="25">
+			Hybrid crossfade overlap (0-100) between convolution and parametric.
+		</member>
+		<member name="pathing_enabled" type="bool" default="false">
+			Enable pathing. Needs baked pathing layers. Live-togglable when the simulator was created with pathing; first enable after pathing-off may reinit.
+		</member>
+		<member name="pathing_normalize_eq" type="bool" default="false">
+			Normalize pathing EQ (less bright). Live-patchable.
+		</member>
+		<member name="pathing_num_samples" type="int" default="4">
+			Visibility samples for bake and runtime (1-16). Changing at runtime reinits the engine.
+		</member>
+		<member name="pathing_vis_range" type="float" default="1000.0">
+			Baking/runtime visibility range (m). Live-patchable.
+		</member>
+		<member name="pathing_path_range" type="float" default="1000.0">
+			Bake-only max path length between probes (m).
+		</member>
+		<member name="pathing_vis_radius" type="float" default="1.0">
+			Probe visibility sphere radius (m). Live-patchable.
+		</member>
+		<member name="pathing_vis_threshold" type="float" default="0.1">
+			Fraction of unoccluded rays to link probes (0-1). Live-patchable.
+		</member>
+		<member name="path_validation_enabled" type="bool" default="true">
+			Default path validation when a player uses Use Global. Live-patchable.
+		</member>
+		<member name="find_alternate_paths" type="bool" default="false">
+			Default alternate-path search when a player uses Use Global. Needs validation on; CPU-heavy. Live-patchable.
+		</member>
+		<member name="occlusion_type" type="int" default="1">
+			[code]0[/code] Raycast, [code]1[/code] Volumetric ([member max_occlusion_samples]).
+		</member>
+		<member name="max_occlusion_samples" type="int" default="64">
+			Simulator cap for volumetric occlusion samples. Per-source samples are clamped to this.
+		</member>
+		<member name="transmission_type" type="int" default="1">
+			Direct transmission: [code]0[/code] frequency-independent, [code]1[/code] 3-band. Path depth uses [member max_transmission_surfaces].
+		</member>
+		<member name="max_transmission_surfaces" type="int" default="1">
+			Default [code]numTransmissionRays[/code] (1-256). [code]1[/code] = nearest surface only. Used when players Use Global.
+		</member>
+		<member name="apply_performance_schedule_preset" type="int" default="0">
+			Preset for sim intervals: [code]0[/code] Custom, [code]1[/code] Quality, [code]2[/code] Balanced, [code]3[/code] Performance. Manual knob edits switch back to Custom.
+		</member>
+		<member name="simulation_cpu_cores_percent" type="float" default="0.15">
+			Fraction of CPU cores for Steam Audio simulation threads (0-1).
+		</member>
+		<member name="direct_sim_interval" type="float" default="0.0">
+			Min seconds between RunDirect on wakes without heavy reflections/pathing. [code]0[/code] = every eligible wake.
+		</member>
+		<member name="reflections_sim_interval" type="float" default="0.1">
+			Min seconds between scheduling RunReflections. [code]0[/code] = every worker tick.
+		</member>
+		<member name="pathing_sim_interval" type="float" default="0.1">
+			Min seconds between scheduling RunPathing. Same semantics as [member reflections_sim_interval].
+		</member>
+		<member name="max_simulation_sources" type="int" default="32">
+			Max simultaneous sources for realtime reflections / TAN ([code]maxNumSources[/code]).
+		</member>
+		<member name="dynamic_scene_commit_min_interval" type="float" default="0.0">
+			Min seconds between applying queued dynamic mesh transforms. [code]0[/code] = every sim tick with updates.
+		</member>
+		<member name="batch_source_updates" type="bool" default="true">
+			Batch deferred source updates instead of blocking the main thread on a busy simulation mutex.
+		</member>
+		<member name="scene_type" type="int" default="1">
+			[code]0[/code] Default, [code]1[/code] Embree, [code]2[/code] Radeon Rays, [code]3[/code] Custom (Godot physics; main-thread sim, no mesh upload).
+		</member>
+		<member name="physics_ray_collision_mask" type="int" default="-1">
+			Custom-scene ray collision mask. [code]-1[/code] = all layers.
+		</member>
+		<member name="physics_ray_batch_size" type="int" default="16">
+			Custom-scene [code]rayBatchSize[/code] (1-256). Ignored for Default/Embree/Radeon (batch 1).
+		</member>
+		<member name="opencl_device_type" type="int" default="0">
+			OpenCL device for Radeon Rays / TAN: [code]0[/code] GPU, [code]1[/code] CPU, [code]2[/code] Any.
+		</member>
+		<member name="opencl_device_index" type="int" default="0">
+			OpenCL device index (0 = first matching).
+		</member>
+		<member name="reflections_adaptive_budget_us" type="int" default="0">
+			If last reflections tick exceeds this (us), increase effective reflection interval. [code]0[/code] = off.
+		</member>
+		<member name="reflections_adaptive_ray_min" type="int" default="128">
+			Lower bound for adaptive realtime rays when the budget is enabled.
+		</member>
+		<member name="reflections_adaptive_ray_recover_frac" type="float" default="0.125">
+			Fraction of max rays recovered per under-budget reflections tick.
+		</member>
+		<member name="reflections_adaptive_ray_recover_cap" type="int" default="512">
+			Cap on per-tick ray recovery. [code]0[/code] = unlimited.
+		</member>
+		<member name="reflections_adaptive_step_sec" type="float" default="0.02">
+			Seconds added to the effective reflection interval when over budget.
+		</member>
+		<member name="reflections_adaptive_max_extra_interval" type="float" default="0.2">
+			Upper bound (s) for adaptive extra reflection delay.
+		</member>
+		<member name="reflections_adaptive_decay_per_sec" type="float" default="0.05">
+			Per-second reduction of adaptive extra delay when under budget.
+		</member>
+		<member name="reflections_defer_after_scene_commit_us" type="int" default="0">
+			If scene commit took at least this many us, skip reflections this wake. [code]0[/code] = off.
+		</member>
+		<member name="convolution_ir_max_samples" type="int" default="0">
+			Clamp applied IR length (samples). [code]0[/code] = no cap.
+		</member>
+		<member name="realtime_reflection_max_distance" type="float" default="0.0">
+			Max distance (m) for realtime reflections. [code]0[/code] disables the cull. Farther sources omit reflection flags.
+		</member>
+	</members>
+</class>

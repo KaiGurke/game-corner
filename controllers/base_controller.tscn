@@ -1,0 +1,86 @@
+[gd_scene format=3 uid="uid://rlo8a1psxbx7"]
+
+[ext_resource type="Script" uid="uid://c188xsa8en1wi" path="res://scripts/base_controller.gd" id="1_8vgi2"]
+[ext_resource type="AudioStream" uid="uid://i1hjiagr6qrl" path="res://assets/sounds/footsteps/concrete_footstep_1.ogg" id="2_44gum"]
+[ext_resource type="PackedScene" uid="uid://cl78j7gdpq2kt" path="res://assets/huds/base_hud.tscn" id="2_f3m70"]
+[ext_resource type="PackedScene" uid="uid://cjnejvy3jwgrc" path="res://assets/menus/escape_menu.tscn" id="2_fsl0l"]
+[ext_resource type="Script" uid="uid://5yonvraqmtar" path="res://addons/nexus_resonance/scripts/resonance_player_config.gd" id="2_xyosa"]
+[ext_resource type="Script" uid="uid://b87nkw04ar4qw" path="res://scripts/character/character_model.gd" id="3_model"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_jq8tk"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_3xd07"]
+
+[sub_resource type="Resource" id="Resource_6rtmm"]
+script = ExtResource("2_xyosa")
+occlusion_radius = 1.0
+metadata/_custom_type_script = "uid://5yonvraqmtar"
+
+[sub_resource type="AudioStreamMicrophone" id="AudioStreamMicrophone_lha3p"]
+
+[sub_resource type="Resource" id="Resource_fiybk"]
+script = ExtResource("2_xyosa")
+source_radius = 0.0
+metadata/_custom_type_script = "uid://5yonvraqmtar"
+
+[sub_resource type="Resource" id="Resource_landcfg"]
+script = ExtResource("2_xyosa")
+source_radius = 0.0
+metadata/_custom_type_script = "uid://5yonvraqmtar"
+
+[node name="Base Controller" type="CharacterBody3D" unique_id=41033590]
+script = ExtResource("1_8vgi2")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=697246]
+visible = false
+mesh = SubResource("CapsuleMesh_jq8tk")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1363282736]
+shape = SubResource("CapsuleShape3D_3xd07")
+
+[node name="ModelRoot" type="Node3D" parent="." unique_id=1139170782]
+script = ExtResource("3_model")
+
+[node name="Head" type="Node3D" parent="." unique_id=1192114018]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5020057, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Head" unique_id=1918261129]
+fov = 103.0
+
+[node name="ResonanceListener" type="ResonanceListener" parent="Head/Camera3D" unique_id=2122727755]
+process_priority = 101
+process_physics_priority = 101
+
+[node name="VoiceChatOutput" type="Node3D" parent="." unique_id=2020948113]
+
+[node name="VoiceChatSource" type="ResonancePlayer" parent="VoiceChatOutput" unique_id=1782695255]
+player_config = SubResource("Resource_6rtmm")
+process_priority = 90
+process_physics_priority = 90
+stream = SubResource("AudioStreamMicrophone_lha3p")
+attenuation_model = 3
+
+[node name="FootstepAudio" type="ResonancePlayer" parent="." unique_id=1070921741]
+player_config = SubResource("Resource_fiybk")
+process_priority = 90
+process_physics_priority = 90
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.08, 0)
+stream = ExtResource("2_44gum")
+attenuation_model = 3
+max_polyphony = 3
+
+[node name="LandAudio" type="ResonancePlayer" parent="." unique_id=1537981908]
+player_config = SubResource("Resource_landcfg")
+process_priority = 90
+process_physics_priority = 90
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.08, 0)
+stream = ExtResource("2_44gum")
+attenuation_model = 3
+max_polyphony = 3
+
+[node name="Base Hud" parent="." unique_id=1373618584 instance=ExtResource("2_f3m70")]
+
+[node name="EscapeMenu" parent="." unique_id=178182607 instance=ExtResource("2_fsl0l")]
+
+[connection signal="is_not_open" from="EscapeMenu" to="." method="_on_escape_menu_is_not_open"]
+[connection signal="is_open" from="EscapeMenu" to="." method="_on_escape_menu_is_open"]

@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="ResonanceProbeVolume" inherits="Node3D" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../class.xsd">
+	<brief_description>
+		3D region for Steam Audio probe placement and baked reverb / pathing.
+	</brief_description>
+	<description>
+		Defines where probes are placed ([member generation_type], [member spacing]) and stores results in [member probe_data]. Assign a [url=#ResonanceBakeConfig]ResonanceBakeConfig[/url] to [member bake_config] for per-volume quality and Bake Ambisonic Order.
+		Bake via the inspector or Project -&gt; Tools -&gt; Nexus Resonance -&gt; Bake. Reflection type and pathing on/off follow [url=#ResonanceRuntimeConfig]ResonanceRuntimeConfig[/url] on [ResonanceRuntime], not BakeConfig. Add [ResonanceProbeExclusion] descendants to skip probe regions. Clear [member ResonancePlayer.pathing_probe_volume] before deleting a referenced volume.
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="generate_probes_on_floor_raycast">
+			<return type="PackedVector3Array" />
+			<description>
+				Uniform Floor: raycasts down for floor hits and returns world-space probe positions. Main thread only.
+			</description>
+		</method>
+		<method name="reload_probe_batch">
+			<return type="void" />
+			<description>
+				Reloads [member probe_data] into [ResonanceServer] without restarting the game.
+			</description>
+		</method>
+		<method name="release_probe_batch">
+			<return type="void" />
+			<description>
+				Unloads this volume's probe batch from [ResonanceServer] and clears the local handle.
+			</description>
+		</method>
+		<method name="get_probe_batch_handle" qualifiers="const">
+			<return type="int" />
+			<description>
+				Server probe-batch handle for this volume, or [code]-1[/code] if unloaded.
+			</description>
+		</method>
+		<method name="set_headless_baking_mode">
+			<return type="void" />
+			<param index="0" name="p_mode" type="bool" />
+			<description>
+				When true, skips editor-only UI/disk assumptions for runtime/RAM baking ([url=#ResonanceRuntimeBaker]ResonanceRuntimeBaker[/url]). Not shown in the inspector.
+			</description>
+		</method>
+		<method name="is_headless_baking_mode" qualifiers="const">
+			<return type="bool" />
+			<description>
+				True when headless/runtime bake mode is active.
+			</description>
+		</method>
+		<method name="get_bake_params_hash">
+			<return type="int" />
+			<description>
+				Hash of volume layout params for outdated-[member probe_data] detection. Excludes [member ResonanceBakeConfig.bake_num_threads].
+			</description>
+		</method>
+		<method name="get_viz_color_state">
+			<return type="int" />
+			<description>
+				Editor probe viz: [code]0[/code] gray (missing/outdated), [code]1[/code] blue (ok), [code]2[/code] red (settings mismatch).
+			</description>
+		</method>
+		<method name="set_viz_color_state">
+			<return type="void" />
+			<param index="0" name="p_state" type="int" />
+			<description>
+				Sets editor probe visualization color. Called when bake status or config changes.
+			</description>
+		</method>
+		<method name="notify_runtime_config_changed">
+			<return type="void" />
+			<param index="0" name="p_runtime_refl" type="int" />
+			<param index="1" name="p_runtime_pathing" type="bool" />
+			<param index="2" name="p_runtime_bake_amb" type="int" default="1" />
+			<description>
+				Called by [ResonanceRuntime] when reflection, pathing, or bake Ambisonic Order changes. Updates editor viz (red/gray on mismatch).
+			</description>
+		</method>
+		<method name="resolved_bake_ambisonic_order">
+			<return type="int" />
+			<param index="0" name="p_global_order" type="int" />
+			<description>
+				Resolves [member ResonanceBakeConfig.bake_ambisonics_order]: Use Global returns [param p_global_order] clamped to 1-3; else the override.
+			</description>
+		</method>
+		<method name="ensure_default_resources">
+			<return type="void" />
+			<description>
+				Ensures [member probe_data] and [member bake_config] exist. Safe to call repeatedly (editor create/inspect).
+			</description>
+		</method>
+		<method name="collect_exclusion_boxes">
+			<return type="Array" />
+			<description>
+				Enabled descendant [ResonanceProbeExclusion] boxes as dictionaries ([code]xform[/code], [code]size[/code]), sorted by path.
+			</description>
+		</method>
+		<method name="notify_exclusion_changed">
+			<return type="void" />
+			<description>
+				Called when a child [ResonanceProbeExclusion] changes. Refreshes preview and bake outdated detection.
+			</description>
+		</method>
+		<method name="add_bake_source">
+			<return type="void" />
+			<param index="0" name="source" type="Variant" />
+			<description>
+				Appends a [ResonancePlayer] bake target ([NodePath] or [Node]). Dedupes; does not bake.
+			</description>
+		</method>
+		<method name="remove_bake_source">
+			<return type="void" />
+			<param index="0" name="source" type="Variant" />
+			<description>
+				Removes matching entries from [member bake_sources].
+			</description>
+		</method>
+		<method name="add_bake_listener">
+			<return type="void" />
+			<param index="0" name="listener" type="Variant" />
+			<description>
+				Appends a [ResonanceListener] bake target ([NodePath] or [Node]). Dedupes; does not bake.
+			</description>
+		</method>
+		<method name="remove_bake_listener">
+			<return type="void" />
+			<param index="0" name="listener" type="Variant" />
+			<description>
+				Removes matching entries from [member bake_listeners].
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="bake_config" type="ResonanceBakeConfig" setter="set_bake_config" getter="get_bake_config">
+			[url=#ResonanceBakeConfig]ResonanceBakeConfig[/url] for this volume. Auto-created when empty in the editor. Null at bake time uses [method ResonanceBakeConfig.create_default].
+		</member>
+		<member name="probe_data" type="ResonanceProbeData" setter="set_probe_data" getter="get_probe_data">
+			[ResonanceProbeData] with baked probes. Auto-created when empty. Required for baked reverb at runtime.
+		</member>
+		<member name="region_size" type="Vector3" setter="set_region_size" getter="get_region_size" default="Vector3(10, 4, 10)">
+			Probe region size in meters (X, Y, Z).
+		</member>
+		<member name="generation_type" type="int" setter="set_generation_type" getter="get_generation_type" enum="ProbeGenerationType" default="1">
+			[constant GEN_CENTROID], [constant GEN_UNIFORM_FLOOR], or [constant GEN_VOLUME].
+		</member>
+		<member name="spacing" type="float" setter="set_spacing" getter="get_spacing" default="2.0">
+			Distance between probes in meters (0.5-20). Smaller = more probes, longer bakes.
+		</member>
+		<member name="height_above_floor" type="float" setter="set_height_above_floor" getter="get_height_above_floor" default="1.5">
+			Probe plane height for Uniform Floor (0.1-5). Editable only when [member generation_type] is Uniform Floor.
+		</member>
+		<member name="show_probes" type="bool" setter="set_viz_visible" getter="is_viz_visible" default="true">
+			Draw probe spheres in the editor when selected. Editor-only.
+		</member>
+		<member name="viz_probe_scale" type="float" setter="set_viz_probe_scale" getter="get_viz_probe_scale" default="1.0">
+			Editor scale of probe sphere gizmos (0.1-3).
+		</member>
+		<member name="scan_targets" type="Array" setter="set_scan_targets" getter="get_scan_targets">
+			NodePaths scanned by Update Targets to fill [member bake_sources] / [member bake_listeners].
+		</member>
+		<member name="bake_sources" type="Array" setter="set_bake_sources" getter="get_bake_sources">
+			[ResonancePlayer] NodePaths for Static Source bakes. Prefer [method add_bake_source] / [method remove_bake_source]. Empty = skip.
+		</member>
+		<member name="bake_listeners" type="Array" setter="set_bake_listeners" getter="get_bake_listeners">
+			[ResonanceListener] NodePaths for Static Listener bakes. Prefer [method add_bake_listener] / [method remove_bake_listener]. Empty = skip.
+		</member>
+		<member name="bake_influence_radius" type="float" setter="set_bake_influence_radius" getter="get_bake_influence_radius" default="10000.0">
+			Influence radius (m) for static source/listener bakes when the target has no custom radius (1-50000).
+		</member>
+	</members>
+	<constants>
+		<constant name="GEN_CENTROID" value="0" enum="ProbeGenerationType">
+			Single probe at the volume center.
+		</constant>
+		<constant name="GEN_UNIFORM_FLOOR" value="1" enum="ProbeGenerationType">
+			Horizontal grid at [member height_above_floor].
+		</constant>
+		<constant name="GEN_VOLUME" value="2" enum="ProbeGenerationType">
+			3D grid with [member spacing].
+		</constant>
+	</constants>
+</class>

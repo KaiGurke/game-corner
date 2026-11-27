@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="ResonancePlayer" inherits="AudioStreamPlayer3D" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../class.xsd">
+	<brief_description>
+		Steam Audio source with occlusion, transmission, reverb, and pathing on top of AudioStreamPlayer3D.
+	</brief_description>
+	<description>
+		Extends [AudioStreamPlayer3D]. Assign a [url=#ResonancePlayerConfig]ResonancePlayerConfig[/url] to [member player_config] for Steam occlusion, distance, air absorption, directivity, reflections, and pathing. Without a config this node is a plain [AudioStreamPlayer3D].
+		With a config, Godot spatial knobs are hidden and Godot attenuation is forced off; [code]volume_db[/code], [code]max_db[/code], [code]pitch_scale[/code], [code]max_polyphony[/code], and the play API still apply. Overlapping voices share one Steam source at this node. See docs/DEVELOPERS.md for the ASP3D ownership split.
+		[method get_stream] is your user [AudioStream]; the engine plays an internal wrapper. AnimationPlayer Audio Clips stay dry unless you use [member convert_anim_audio_runtime] or [method play_animation_audio_clip]. Steam fields live on the config; pathing volume stays on [member pathing_probe_volume].
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="set_stream">
+			<return type="void" />
+			<param index="0" name="stream" type="AudioStream" />
+			<description>
+				With [member player_config], stores the user [AudioStream] and drives an internal Resonance wrapper. Without a config, sets the plain [AudioStreamPlayer3D] stream slot.
+			</description>
+		</method>
+		<method name="get_stream" qualifiers="const">
+			<return type="AudioStream" />
+			<description>
+				With [member player_config], returns the user [AudioStream] (not the internal wrapper). Without a config, returns the [AudioStreamPlayer3D] stream.
+			</description>
+		</method>
+		<method name="get_inner_stream" qualifiers="const">
+			<return type="AudioStream" />
+			<description>
+				Same as [method get_stream]. Convenience for VOIP, mic, and generator scripts.
+			</description>
+		</method>
+		<method name="get_inner_stream_playback">
+			<return type="AudioStreamPlayback" />
+			<description>
+				Returns the decoder [AudioStreamPlayback] under the Resonance wrapper. Without [member player_config], same as [method AudioStreamPlayer3D.get_stream_playback].
+			</description>
+		</method>
+		<method name="play">
+			<return type="void" />
+			<param index="0" name="from_position" type="float" default="0.0" />
+			<description>
+				Starts playback from [param from_position]. With [member player_config], wraps the stream, ensures a Steam source (retries if the server was not ready), and starts the reverb-split child when needed.
+			</description>
+		</method>
+		<method name="play_stream">
+			<return type="void" />
+			<param index="0" name="from_position" type="float" default="0.0" />
+			<description>
+				Calls [method play] with the same [param from_position]. Alias for existing projects and tutorials.
+			</description>
+		</method>
+		<method name="play_animation_audio_clip">
+			<return type="void" />
+			<param index="0" name="stream" type="AudioStream" />
+			<param index="1" name="from_position" type="float" default="0.0" />
+			<description>
+				Sets [code]stream[/code] and calls [method play]. Use from AnimationPlayer method tracks, or after [member convert_anim_audio_runtime] rewrites Audio Clip tracks.
+			</description>
+		</method>
+		<method name="stop">
+			<return type="void" />
+			<description>
+				Stops playback. With [member player_config], soft-stops dry input so reverb/pathing tails can drain; without a config (or in the editor), hard-stops like [AudioStreamPlayer3D].
+			</description>
+		</method>
+		<method name="set_reverb_split_output">
+			<return type="void" />
+			<param index="0" name="enable" type="bool" />
+			<param index="1" name="reverb_bus" type="StringName" default="" />
+			<description>
+				When [param enable] is true, creates child [code]ResonanceReverbOutput[/code] ([AudioStreamPlayer]) for Parametric/Hybrid wet. Optional [param reverb_bus] sets that child's bus; it does not mirror parent mute or bus automatically.
+			</description>
+		</method>
+		<method name="get_reverb_split_output" qualifiers="const">
+			<return type="bool" />
+			<description>
+				Returns whether the [code]ResonanceReverbOutput[/code] child path is enabled.
+			</description>
+		</method>
+		<method name="reload_source_after_reinit">
+			<return type="void" />
+			<description>
+				Drops the Steam source handle and recreates it after a server reinit. [ResonanceRuntime] calls this; scripts rarely need it.
+			</description>
+		</method>
+		<method name="get_audio_instrumentation">
+			<return type="Dictionary" />
+			<description>
+				Debug counters when [member player_config] is set: [code]godot_*[/code] field snapshot, [code]effective_volume_linear[/code], and when voices are active [code]polyphony_voice_count[/code] plus dropout totals. Empty without a config.
+			</description>
+		</method>
+		<method name="reset_audio_instrumentation">
+			<return type="void" />
+			<description>
+				Clears instrumentation counters on every active internal playback for this node.
+			</description>
+		</method>
+		<method name="get_effective_volume_linear_cached" qualifiers="const">
+			<return type="float" />
+			<description>
+				Linear source loudness from [code]min(volume_db, max_db)[/code], refreshed each frame and applied to the dry buffer before Steam DSP. Use config [code]direct_mix_level[/code] for dry-only level.
+			</description>
+		</method>
+		<method name="build_directivity_gizmo_lines" qualifiers="static">
+			<return type="PackedVector3Array" />
+			<param index="0" name="enabled" type="bool" />
+			<param index="1" name="input_mode" type="int" />
+			<param index="2" name="weight" type="float" />
+			<param index="3" name="power" type="float" />
+			<param index="4" name="user_value" type="float" />
+			<param index="5" name="size" type="float" />
+			<description>
+				Line-list wireframe (pairs of [Vector3], forward [code]-Z[/code]) for editor and runtime gizmos. Simulation mode ([param input_mode] [code]0[/code]) draws a dipole from [param weight]/[param power]; otherwise a unit sphere plus arrow (scaled by [param user_value] in user mode).
+			</description>
+		</method>
+		<method name="set_inputs">
+			<return type="void" />
+			<param index="0" name="flags" type="int" default="-1" />
+			<description>
+				Refresh config and push this player's Steam Source [code]SetInputs[/code] (blocking) before the next sim tick. Optional [param flags] is reserved (Direct / Reflections / Pathing bits); default applies all. No-op without [member player_config] or a live source handle.
+			</description>
+		</method>
+		<method name="get_outputs" qualifiers="const">
+			<return type="Dictionary" />
+			<description>
+				Simulation readback for this source: [code]occlusion[/code], [code]transmission[/code], [code]air_absorption[/code], [code]directivity[/code], [code]distance_attenuation[/code], plus [code]reflections_mix_level[/code], [code]pathing_mix_level[/code], [code]reflections_enabled[/code], [code]distance_attenuation_enabled[/code] from the config cache. Empty without a config or handle. No IR pointers.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="player_config" type="ResonancePlayerConfig" setter="set_player_config" getter="get_player_config">
+			[url=#ResonancePlayerConfig]ResonancePlayerConfig[/url] for Steam processing. Null = plain [AudioStreamPlayer3D]. Resource fields are documented on that class.
+		</member>
+		<member name="pathing_probe_volume" type="NodePath" setter="set_pathing_probe_volume" getter="get_pathing_probe_volume">
+			Optional [ResonanceProbeVolume] for path finding when [member player_config] is set. Empty = first loaded pathing volume. Clear before deleting a referenced volume.
+		</member>
+		<member name="auto_exclude_colliders" type="bool" setter="set_auto_exclude_colliders" getter="get_auto_exclude_colliders" default="true">
+			When [code]scene_type[/code] is Custom, registers descendant [CollisionObject3D] RIDs with [ResonanceServer] so occlusion rays ignore this source's colliders. Disable to let those bodies block rays.
+		</member>
+		<member name="convert_anim_audio_runtime" type="bool" setter="set_convert_anim_audio_runtime" getter="get_convert_anim_audio_runtime" default="false">
+			At runtime with [member player_config], converts targeting AnimationPlayer Audio Clip tracks once into method keys for [method play_animation_audio_clip] (Steam-safe; native polyphonic Audio Clips stay dry).
+		</member>
+		<member name="exclude_from_debug" type="bool" setter="set_exclude_from_debug" getter="get_exclude_from_debug" default="false">
+			Hides this player from the debug overlay Audio Instrumentation list.
+		</member>
+		<member name="show_directivity_gizmo" type="bool" setter="set_show_directivity_gizmo" getter="get_show_directivity_gizmo" default="false">
+			Shows the directivity wireframe in the editor viewport and at runtime (forward [code]-Z[/code]). Shape follows [member player_config] directivity fields; independent of the debug HUD.
+		</member>
+	</members>
+	<constants>
+		<constant name="ATTENUATION_INVERSE" value="0" enum="AttenuationMode">
+			Inverse distance on Direct ([code]min/distance[/code], [member ResonancePlayerConfig.max_distance] ignored). Same Phonon InverseDistance TYPE on Pathing/Reflections when distance attenuation is on.
+		</constant>
+		<constant name="ATTENUATION_LINEAR" value="1" enum="AttenuationMode">
+			Linear falloff to silence at max distance on Direct playback; Pathing uses the CALLBACK model on path length; Reflections CALLBACK only with [member ResonancePlayerConfig.use_distance_curve_for_reflections].
+		</constant>
+		<constant name="ATTENUATION_CUSTOM_CURVE" value="2" enum="AttenuationMode">
+			Custom [Curve] rolloff from [member ResonancePlayerConfig.attenuation_curve] (same Pathing/Reflections rules as Linear).
+		</constant>
+		<constant name="ATTENUATION_DISABLED" value="3" enum="AttenuationMode">
+			No distance rolloff on Direct; Phonon default distance model on wet slots.
+		</constant>
+	</constants>
+</class>

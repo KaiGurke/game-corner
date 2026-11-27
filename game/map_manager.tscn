@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://di6jgko7ni684"]
+
+[ext_resource type="Script" uid="uid://ctv0s6ghv3jb0" path="res://addons/scripts/map_manager.gd" id="1_co5xu"]
+
+[node name="Map Manager" type="Node" unique_id=1654210332]
+script = ExtResource("1_co5xu")

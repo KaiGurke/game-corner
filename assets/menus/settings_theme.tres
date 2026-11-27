@@ -1,0 +1,38 @@
+[gd_resource type="Theme" format=3 uid="uid://dklq1hdph1dhw"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rjsag"]
+bg_color = Color(0.11764706, 0.11764706, 0.11764706, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rkp3d"]
+bg_color = Color(0.11858138, 0.11858139, 0.11858132, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sup7p"]
+bg_color = Color(0.17283267, 0.17283267, 0.17283258, 1)
+expand_margin_left = 5.0
+expand_margin_right = 5.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7h2wy"]
+bg_color = Color(0.12712, 0.28, 0.061600007, 1)
+expand_margin_left = 5.0
+expand_margin_right = 5.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n4a8d"]
+bg_color = Color(0.0885599, 0.08855992, 0.08855986, 1)
+expand_margin_left = 5.0
+expand_margin_right = 5.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v0bl3"]
+bg_color = Color(0.013025428, 0.010427561, 0.0104276305, 1)
+
+[resource]
+Button/font_sizes/font_size = 20
+Button/styles/normal = SubResource("StyleBoxFlat_rjsag")
+TabContainer/colors/drop_mark_color = Color(1, 1, 1, 1)
+TabContainer/constants/side_margin = 5
+TabContainer/constants/tab_separation = 15
+TabContainer/font_sizes/font_size = 28
+TabContainer/styles/panel = SubResource("StyleBoxFlat_rkp3d")
+TabContainer/styles/tab_hovered = SubResource("StyleBoxFlat_sup7p")
+TabContainer/styles/tab_selected = SubResource("StyleBoxFlat_7h2wy")
+TabContainer/styles/tab_unselected = SubResource("StyleBoxFlat_n4a8d")
+TabContainer/styles/tabbar_background = SubResource("StyleBoxFlat_v0bl3")
